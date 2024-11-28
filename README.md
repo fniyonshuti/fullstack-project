@@ -1,2 +1,2 @@
 # fullstack-project
-this is repositort to learn fullstack application ecosystem
+this is repository to learn fullstack application ecosystem
