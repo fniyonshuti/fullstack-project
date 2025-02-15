@@ -1,68 +1,57 @@
-import express from "express"
-import cors from "cors"
-import dotenv from "dotenv";
+import express from "express";
 import mongoose from "mongoose";
+import cors from "cors";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
+import dotenv from "dotenv";
 
-const app = express();
+dotenv.config();
+
 
 dotenv.config()
-const DB_URI = process.env.DB_URI;
 
+const app = express();
+app.use(express.json());
 app.use(cors());
 
-const ExampleSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  age: { type: Number, required: true },
+// MongoDB Connection
+mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log("MongoDB Connected"))
+    .catch(err => console.log(err));
+
+// User Schema
+const UserSchema = new mongoose.Schema({
+    name: String,
+    email: String,
+    password: String
+});
+const User = mongoose.model("User", UserSchema);
+
+// Register API
+app.post("/register", async (req, res) => {
+    const { name, email, password } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = new User({ name, email, password: hashedPassword });
+    await user.save();
+    res.json({ message: "User Registered" });
 });
 
-const userData = mongoose.model("user", ExampleSchema);
+// Login API
+// const jwt = require("jsonwebtoken");
+// const bcrypt = require("bcryptjs");
 
+app.post("/login", async (req, res) => {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) return res.status(400).json({ error: "User not found" });
 
-app.get("/api/user", async(req, res) => {
-  try {
-    
-  const fetched = await userData.find();
-  res.json(fetched);
-  } catch (error) {
-    console.log("there is error")
-    
-  }
-  
-  
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return res.status(400).json({ error: "Invalid password" });
+
+    const token = jwt.sign({ userId: user._id }, "secret", { expiresIn: "1h" });
+    res.json({ token });
 });
 
-const addUser = async () => {
-  try {
-    const newUser = new User({ name: "John Doe", age: 25 });
-    await newUser.save();
-    console.log("User Added:", newUser);
-  } catch (error) {
-    console.error("Error inserting user:", error);
-  }
-};
-
-addUser();
-// app.post("/api/user",(req,res) =>{
-//   const [name,age] = req.body;
-//   user.push(newElement);
-//   res.send(user);
-// });
-
-console.log(DB_URI);
-const connectDB = async () => {
-
-  try {
-    await mongoose.connect(DB_URI);
-    console.log("DB CONNECTED SUCCESSFULLY!!")
-    
-  } catch (error) {
-    console.error("SOMETHING WENT WRONG TRYING TO CONNECT DB ..." + error)
-  }
-}
-
-connectDB();
-// Start the server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+// Start Server
+const PORT = process.env.PORT || 5001;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
