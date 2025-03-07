@@ -29,11 +29,18 @@ const User = mongoose.model("User", UserSchema);
 
 // Register API
 app.post("/register", async (req, res) => {
+  try {
     const { name, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({ name, email, password: hashedPassword });
     await user.save();
     res.json({ message: "User Registered" });
+    
+  } catch (error) {
+    console.log(error);
+  }
+
+    
 });
 
 // Login API
