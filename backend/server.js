@@ -1,64 +1,31 @@
 import express from "express";
 import mongoose from "mongoose";
-import cors from "cors";
-import jwt from "jsonwebtoken";
-import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
+import cors from "cors";
+import userRoutes from "./routes/userRoutes.js";
+import jobRoutes from "./routes/jobRoutes.js";
+import applicationRoutes from "./routes/applicationRoutes.js";
+import employerRoutes from './routes/employerRoutes.js';
 
 dotenv.config();
-
-
-dotenv.config()
-
 const app = express();
+
+// Middleware
 app.use(express.json());
 app.use(cors());
 
+// Routes
+app.use("/api/users", userRoutes);
+app.use("/api/jobs", jobRoutes);
+app.use("/api/applications", applicationRoutes);
+app.use('/api/employers', employerRoutes);
+
 // MongoDB Connection
-mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log("MongoDB Connected"))
-    .catch(err => console.log(err));
-
-// User Schema
-const UserSchema = new mongoose.Schema({
-    name: String,
-    email: String,
-    password: String
-});
-const User = mongoose.model("User", UserSchema);
-
-// Register API
-app.post("/register", async (req, res) => {
-  try {
-    const { name, email, password } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new User({ name, email, password: hashedPassword });
-    await user.save();
-    res.json({ message: "User Registered" });
-    
-  } catch (error) {
-    console.log(error);
-  }
-
-    
-});
-
-// Login API
-// const jwt = require("jsonwebtoken");
-// const bcrypt = require("bcryptjs");
-
-app.post("/login", async (req, res) => {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ error: "User not found" });
-
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ error: "Invalid password" });
-
-    const token = jwt.sign({ userId: user._id }, "secret", { expiresIn: "1h" });
-    res.json({ token });
-});
+mongoose
+  .connect(process.env.DB_URI)
+  .then(() => console.log("MongoDB Connected"))
+  .catch((err) => console.log(err));
 
 // Start Server
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
