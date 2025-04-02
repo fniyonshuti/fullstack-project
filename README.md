@@ -20,7 +20,7 @@ Ensure you have the following installed:
 ### Clone the Repository
 
 ```sh
- git https://github.com/fniyonshuti/fullstack-project
+ git clone https://github.com/fniyonshuti/fullstack-project
  cd frontend/my_app
 ```
 
@@ -62,7 +62,7 @@ Ensure you have the following installed:
 ### Clone the Repository
 
 ```sh
- git https://github.com/fniyonshuti/fullstack-project
+ git clone https://github.com/fniyonshuti/fullstack-project
  cd frontend/my_app
 ```
 
