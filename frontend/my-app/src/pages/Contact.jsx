@@ -1,6 +1,6 @@
 export default function ContactSection() {
     return (
-      <section className="bg-gray-100 py-20">
+      <section className="bg-gray-100 py-20" id="contact">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           
           {/* Header */}
@@ -22,7 +22,7 @@ export default function ContactSection() {
                 <span className="bg-blue-600 text-white p-3 rounded-full">
                   📍
                 </span>
-                <p className="text-gray-700">123 Career Street, New York, NY 10001</p>
+                <p className="text-gray-700">123 KG st, Rwanda</p>
               </div>
               <div className="flex items-center space-x-4">
                 <span className="bg-blue-600 text-white p-3 rounded-full">
@@ -34,7 +34,7 @@ export default function ContactSection() {
                 <span className="bg-blue-600 text-white p-3 rounded-full">
                   📞
                 </span>
-                <p className="text-gray-700">+1 (123) 456-7890</p>
+                <p className="text-gray-700">+250790235869</p>
               </div>
   
               {/* Social Media */}

@@ -1,5 +1,6 @@
 import AboutSection from './About';
 import ContactSection from './Contact';
+import { Link } from 'react-router-dom';
 
 export default function Homepage() {
   return (
@@ -34,12 +35,12 @@ export default function Homepage() {
 
         {/* Call-to-Action Buttons */}
         <div className="mt-10 flex flex-col md:flex-row justify-center gap-4">
-          <a href="/signup" className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
+          <Link to="/login" className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
             Get Started as Job Seeker
-          </a>
-          <a href="/post-job" className="bg-gray-900 text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition">
+          </Link>
+          <Link to="/login" className="bg-gray-900 text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition">
             Post a Job as Employer
-          </a>
+          </Link>
         </div>
 
         {/* Image or Illustration */}
@@ -49,8 +50,8 @@ export default function Homepage() {
 
       </div>
     </section>
-  <AboutSection/>
-  <ContactSection/>
+  <AboutSection id="#about"/>
+  <ContactSection id="#contact"/>
   </>
   );
 }

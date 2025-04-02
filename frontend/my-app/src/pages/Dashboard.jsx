@@ -1,109 +1,169 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { FaUsers, FaBriefcase, FaChartBar } from "react-icons/fa";
-import { Line } from "react-chartjs-2";
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from "chart.js";
+import { FaUser, FaChartBar, FaShoppingCart, FaClipboardList, FaBriefcase, FaBell, FaEnvelope, FaUsers, FaRegIdCard, FaSignOutAlt } from "react-icons/fa";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import UsersList from "./UsersList";
+import Employers from "./EmployerList";
+import JobManagement from "./AdminJobManagement"; 
+import JobSeeker from "./Adminjobseeker";
 
-// Register chart.js components
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
-
-const dashboardData = {
-  users: 250,
-  jobsPosted: 125,
-  applicationsReceived: 320,
-};
-
-const chartData = {
-  labels: ["January", "February", "March", "April", "May", "June"],
-  datasets: [
-    {
-      label: "Applications Over Time",
-      data: [30, 45, 60, 70, 85, 100],
-      fill: true,
-      backgroundColor: "rgba(38, 123, 255, 0.2)",
-      borderColor: "rgba(38, 123, 255, 1)",
-      tension: 0.3,
-    },
-  ],
-};
+const data = [
+  { name: "Mar 25", value: 2000 },
+  { name: "Mar 26", value: 2500 },
+  { name: "Mar 27", value: 1800 },
+  { name: "Mar 28", value: 3000 },
+  { name: "Mar 29", value: 3500 }
+];
 
 export default function AdminDashboard() {
-  const [activeTab, setActiveTab] = useState("overview");
+  const [activeSection, setActiveSection] = useState("dashboard");
+
+  const handleNavigation = (section) => {
+    setActiveSection(section);
+  };
+
+  const handleLogout = () => {
+    // Clear authentication tokens or session data
+    localStorage.removeItem("authToken");
+    sessionStorage.removeItem("userSession");
+
+    console.log("Admin logged out");
+
+    // Optionally redirect to login or homepage
+    window.location.href = "/"; // Adjust the path to your login page
+  };
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <div className="flex">
-        {/* Sidebar */}
-        <div className="w-64 bg-blue-800 text-white p-6">
-          <h1 className="text-2xl font-bold mb-8">Career Connect</h1>
-          <ul>
-            <li className={`p-4 cursor-pointer ${activeTab === "overview" ? "bg-blue-700" : ""}`} onClick={() => setActiveTab("overview")}>
-              Overview
-            </li>
-            <li className={`p-4 cursor-pointer ${activeTab === "users" ? "bg-blue-700" : ""}`} onClick={() => setActiveTab("users")}>
-              Users
-            </li>
-            <li className={`p-4 cursor-pointer ${activeTab === "jobs" ? "bg-blue-700" : ""}`} onClick={() => setActiveTab("jobs")}>
-              Job Listings
-            </li>
-            <li className={`p-4 cursor-pointer ${activeTab === "applications" ? "bg-blue-700" : ""}`} onClick={() => setActiveTab("applications")}>
-              Applications
-            </li>
-            <li className="p-4 cursor-pointer">Manage Users</li>
-            <li className="p-4 cursor-pointer">Add Job</li>
-          </ul>
-        </div>
+    <div className="flex h-screen bg-gray-100 mt-40 mb-40">
+      {/* Sidebar */}
+      <aside className="w-64 bg-gray-900 text-white p-5 space-y-6">
+        <h2 className="text-2xl font-bold">Career Connect</h2>
+        <nav>
+          <a
+            href="#"
+            onClick={() => handleNavigation("dashboard")}
+            className={`flex items-center p-2 space-x-3 hover:bg-gray-700 rounded ${activeSection === "dashboard" ? "bg-gray-700" : ""}`}
+          >
+            <FaChartBar /> <span>Dashboard</span>
+          </a>
+          <a
+            href="#"
+            onClick={() => handleNavigation("users")}
+            className={`flex items-center p-2 space-x-3 hover:bg-gray-700 rounded ${activeSection === "users" ? "bg-gray-700" : ""}`}
+          >
+            <FaUser /> <span>Users</span>
+          </a>
+          <a
+            href="#"
+            onClick={() => handleNavigation("jobseekers")}
+            className={`flex items-center p-2 space-x-3 hover:bg-gray-700 rounded ${activeSection === "jobseekers" ? "bg-gray-700" : ""}`}
+          >
+            <FaRegIdCard /> <span>Job Seekers</span>
+          </a>
+          <a
+            href="#"
+            onClick={() => handleNavigation("employers")}
+            className={`flex items-center p-2 space-x-3 hover:bg-gray-700 rounded ${activeSection === "employers" ? "bg-gray-700" : ""}`}
+          >
+            <FaBriefcase /> <span>Employers</span>
+          </a>
+          <a
+            href="#"
+            onClick={() => handleNavigation("jobs")}
+            className={`flex items-center p-2 space-x-3 hover:bg-gray-700 rounded ${activeSection === "jobs" ? "bg-gray-700" : ""}`}
+          >
+            <FaShoppingCart /> <span>Jobs</span>
+          </a>
+          <a
+            href="#"
+            onClick={() => handleNavigation("applications")}
+            className={`flex items-center p-2 space-x-3 hover:bg-gray-700 rounded ${activeSection === "applications" ? "bg-gray-700" : ""}`}
+          >
+            <FaUsers /> <span>Applications</span>
+          </a>
+          <a
+            href="#"
+            onClick={() => handleNavigation("reports")}
+            className={`flex items-center p-2 space-x-3 hover:bg-gray-700 rounded ${activeSection === "reports" ? "bg-gray-700" : ""}`}
+          >
+            <FaClipboardList /> <span>Reports</span>
+          </a>
+          <a
+            href="#"
+            onClick={() => handleNavigation("notifications")}
+            className={`flex items-center p-2 space-x-3 hover:bg-gray-700 rounded ${activeSection === "notifications" ? "bg-gray-700" : ""}`}
+          >
+            <FaBell /> <span>Notifications</span>
+          </a>
+          <a
+            href="#"
+            onClick={() => handleNavigation("messages")}
+            className={`flex items-center p-2 space-x-3 hover:bg-gray-700 rounded ${activeSection === "messages" ? "bg-gray-700" : ""}`}
+          >
+            <FaEnvelope /> <span>Messages</span>
+          </a>
 
-        {/* Main Content */}
-        <div className="flex-1 p-6">
-          {/* Dashboard Header */}
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-3xl font-semibold text-gray-800">Admin Dashboard</h2>
-            <div className="flex items-center space-x-4">
-              <Link to="/profile" className="bg-blue-600 text-white px-4 py-2 rounded-lg">Admin Profile</Link>
-              <button className="bg-red-600 text-white px-4 py-2 rounded-lg">Logout</button>
+          {/* Logout Button */}
+          <button
+            onClick={handleLogout}
+            className="flex items-center p-2 space-x-3 hover:bg-red-700 rounded text-red-400 mt-6"
+          >
+            <FaSignOutAlt /> <span>Logout</span>
+          </button>
+        </nav>
+      </aside>
+
+      {/* Main Content */}
+      <main className="flex-1 p-6">
+        <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
+
+        {/* Conditional Content */}
+        {activeSection === "dashboard" && (
+          <div>
+            {/* Stats Cards */}
+            <div className="grid grid-cols-4 gap-6">
+              <div className="bg-white p-4 shadow rounded-lg">
+                <p className="text-gray-600">Visitors</p>
+                <h2 className="text-xl font-bold">1,294</h2>
+              </div>
+              <div className="bg-white p-4 shadow rounded-lg">
+                <p className="text-gray-600">Subscribers</p>
+                <h2 className="text-xl font-bold">1,303</h2>
+              </div>
+              <div className="bg-white p-4 shadow rounded-lg">
+                <p className="text-gray-600">Jobs Posted</p>
+                <h2 className="text-xl font-bold">245</h2>
+              </div>
+              <div className="bg-white p-4 shadow rounded-lg">
+                <p className="text-gray-600">Applications</p>
+                <h2 className="text-xl font-bold">576</h2>
+              </div>
+            </div>
+
+            {/* Chart */}
+            <div className="mt-6 bg-white p-6 shadow rounded-lg">
+              <h3 className="text-xl font-bold mb-4">User Statistics</h3>
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={data}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip />
+                  <Line type="monotone" dataKey="value" stroke="#8884d8" strokeWidth={2} />
+                </LineChart>
+              </ResponsiveContainer>
             </div>
           </div>
+        )}
 
-          {/* Dashboard Overview */}
-          {activeTab === "overview" && (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              {/* Users */}
-              <div className="bg-white shadow-lg rounded-lg p-6 flex items-center space-x-4">
-                <FaUsers className="text-blue-600 text-4xl" />
-                <div>
-                  <h3 className="text-xl font-semibold">Users</h3>
-                  <p className="text-gray-500">{dashboardData.users}</p>
-                </div>
-              </div>
-
-              {/* Jobs */}
-              <div className="bg-white shadow-lg rounded-lg p-6 flex items-center space-x-4">
-                <FaBriefcase className="text-green-600 text-4xl" />
-                <div>
-                  <h3 className="text-xl font-semibold">Jobs Posted</h3>
-                  <p className="text-gray-500">{dashboardData.jobsPosted}</p>
-                </div>
-              </div>
-
-              {/* Applications */}
-              <div className="bg-white shadow-lg rounded-lg p-6 flex items-center space-x-4">
-                <FaChartBar className="text-purple-600 text-4xl" />
-                <div>
-                  <h3 className="text-xl font-semibold">Applications Received</h3>
-                  <p className="text-gray-500">{dashboardData.applicationsReceived}</p>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Graph - Applications over Time */}
-          <div className="bg-white shadow-lg rounded-lg p-6">
-            <h3 className="text-2xl font-semibold text-gray-800 mb-6">Applications Over Time</h3>
-            <Line data={chartData} />
-          </div>
-        </div>
-      </div>
+        {activeSection === "users" && <div><UsersList /></div>}
+        {activeSection === "jobseekers" && <div><JobSeeker /></div>}
+        {activeSection === "employers" && <div><Employers /></div>}
+        {activeSection === "jobs" && <div><JobManagement /></div>}
+        {activeSection === "applications" && <div>Applications Section Content</div>}
+        {activeSection === "reports" && <div>Reports Section Content</div>}
+        {activeSection === "notifications" && <div>Notifications Section Content</div>}
+        {activeSection === "messages" && <div>Messages Section Content</div>}
+      </main>
     </div>
   );
 }

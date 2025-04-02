@@ -1,6 +1,6 @@
 export default function AboutSection() {
     return (
-      <section className="bg-white py-20">
+      <section className="bg-white py-20 " id="about">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           
           {/* Header */}
@@ -29,8 +29,8 @@ export default function AboutSection() {
             <div>
               <h3 className="text-2xl font-semibold text-gray-900">Our Mission</h3>
               <p className="mt-4 text-gray-600">
-                At Career Connect, we believe in the power of **meaningful careers**. Our mission is to 
-                **connect talented professionals** with top companies, ensuring that both job seekers 
+                At Career Connect, we believe in the power of meaningful careers. Our mission is to 
+                connect talented professionals with top companies, ensuring that both job seekers 
                 and employers find the perfect match.
               </p>
   
