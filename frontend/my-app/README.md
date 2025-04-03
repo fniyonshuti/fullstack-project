@@ -1,8 +1,49 @@
-# React + Vite
+# CAREER CONNECT
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Career connect is a platform for empowering job seekers with job opportunities
 
-Currently, two official plugins are available:
+## 🚀 Project Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Welcome to **CAREER CONNECT**! This application is built using **React.js**, providing a seamless and interactive user experience.
+
+## 🛠️ Installation & Setup
+
+Follow these steps to get started with the project:
+
+### Prerequisites
+
+Ensure you have the following installed:
+
+- [Node.js](https://nodejs.org/) (LTS version recommended)
+- npm or yarn
+
+### Clone the Repository
+
+```sh
+ git https://github.com/fniyonshuti/fullstack-project
+ cd frontend/my_app
+```
+
+### INSTALLATION
+
+```
+    npm install
+```
+
+or
+
+```
+    yarn install
+```
+
+### Start the development server
+
+```
+npm run dev
+```
+
+or
+
+```
+yarn run dev
+```
