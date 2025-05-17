@@ -12,7 +12,7 @@ export default function JobListings() {
   // Fetch jobs from backend API using axios
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/jobs") 
+      .get("https://career-connect-backend-xyxu.onrender.com/api/jobs") 
       .then((response) => {
         setJobs(response.data); // Set jobs data to state
       })

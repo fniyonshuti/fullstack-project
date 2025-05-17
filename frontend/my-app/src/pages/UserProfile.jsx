@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FaUser, FaBriefcase, FaGraduationCap, FaBell, FaCalendarAlt } from "react-icons/fa";
 
 export default function UserProfile() {
   // Initial User Data

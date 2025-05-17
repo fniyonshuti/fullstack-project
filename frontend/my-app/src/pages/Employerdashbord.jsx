@@ -23,7 +23,7 @@ const EmployerDashboard = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/jobs");
+        const response = await fetch("https://career-connect-backend-xyxu.onrender.com/api/jobs");
         if (!response.ok) {
           throw new Error("Failed to fetch jobs");
         }

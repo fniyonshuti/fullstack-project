@@ -11,7 +11,7 @@ export default function JobDetail() {
   // Fetch job details based on the jobId
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/jobs/${jobId}`)
+      .get(`https://career-connect-backend-xyxu.onrender.com/api/jobs/${jobId}`)
       .then((response) => {
         setJob(response.data);
       })
@@ -34,7 +34,7 @@ export default function JobDetail() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/applications",
+        "https://career-connect-backend-xyxu.onrender.com/api/applications",
         { jobId }, // Send only jobId (userId is handled in the backend)
         {
           headers: {

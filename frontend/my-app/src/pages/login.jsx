@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
-  
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -18,8 +18,8 @@ const Login = () => {
 
     try {
       const user = await login(email, password); // Assuming `login` returns the user data with role
-      const role = user?.user.role; // Fetch the user's role
-      console.log(role,user);
+      const role = user?.user?.role; // Fetch the user's role
+      console.log(role, user);
 
       // Redirect based on user role
       if (role === "jobseeker") {
@@ -29,8 +29,8 @@ const Login = () => {
       } else if (role === "employer") {
         navigate("/employer");
       } else {
-        // Redirect to a default page or show an error
-        navigate("/"); 
+        // If role is unknown or undefined, default to jobseeker dashboard
+        navigate("/jobseeker");
       }
     } catch (error) {
       setErrorMessage("Invalid credentials. Please try again.");

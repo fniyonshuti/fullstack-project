@@ -24,7 +24,7 @@ export default function SignupPage() {
     setSuccess(""); // Clear success message
 
     try {
-      const response = await axios.post("http://localhost:5000/api/users/register", formData, {
+      const response = await axios.post("https://career-connect-backend-xyxu.onrender.com/api/users/register", formData, {
         headers: { "Content-Type": "application/json" },
       });
 

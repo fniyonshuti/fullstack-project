@@ -19,7 +19,7 @@ export default function UsersList() {
   const fetchUsers = async () => {
     try {
       const token = localStorage.getItem("authToken");
-      const response = await axios.get("http://localhost:5000/api/users", {
+      const response = await axios.get("https://career-connect-backend-xyxu.onrender.com/api/users", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUsers(response.data);
@@ -34,7 +34,7 @@ export default function UsersList() {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
     try {
       const token = localStorage.getItem("authToken");
-      await axios.delete(`http://localhost:5000/api/users/${id}`, {
+      await axios.delete(`https://career-connect-backend-xyxu.onrender.com/api/users/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUsers(users.filter((user) => user._id !== id));
@@ -59,11 +59,11 @@ export default function UsersList() {
     try {
       const token = localStorage.getItem("authToken");
       if (editingUser) {
-        await axios.put(`http://localhost:5000/api/users/${editingUser._id}`, userData, {
+        await axios.put(`https://career-connect-backend-xyxu.onrender.com/api/users/${editingUser._id}`, userData, {
           headers: { Authorization: `Bearer ${token}` },
         });
       } else {
-        await axios.post("http://localhost:5000/api/users", userData, {
+        await axios.post("https://career-connect-backend-xyxu.onrender.com/api/users", userData, {
           headers: { Authorization: `Bearer ${token}` },
         });
       }
